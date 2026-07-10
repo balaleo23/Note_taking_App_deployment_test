@@ -1,0 +1,27 @@
+{%extends "quicknotes/quicknotes.html" %}
+{% block title %}List of Quicknotes {% endblock %}
+{% block body %}
+<h1>Your Notes</h1>
+
+{% if notes %}
+<ul class="notes-grid">
+    {% for note in notes %}
+    <li class="note-card">
+        <a href="{% url 'note' note.id %}">{{ note.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="empty-state">No notes yet — add your first one below.</p>
+{% endif %}
+
+<section class="card add-note">
+    <h2>Add a note</h2>
+    <form class="note-form" action="{% url 'add' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-primary" type="submit">Add note</button>
+    </form>
+</section>
+
+{% endblock %}
